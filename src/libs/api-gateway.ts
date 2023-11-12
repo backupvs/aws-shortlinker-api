@@ -29,3 +29,13 @@ export const formatJSONFailed = (statusCode: HttpCodes, errorMsg: string) => {
     }),
   };
 };
+
+export const redirect = (destinationUrl: string) => {
+  return {
+    statusCode: 301,
+    headers: {
+      Location: destinationUrl,
+    },
+    body: '',
+  };
+};
