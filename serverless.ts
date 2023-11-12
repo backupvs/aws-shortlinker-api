@@ -6,6 +6,7 @@ import {
   createShortLink,
   getShortLinks,
   deleteShortLink,
+  rootHandler,
 } from '@lambdas/index';
 import { esBuildConfig } from 'src/serverless/esBuildConfig';
 import { dynamoDbLocalConfig } from 'src/serverless/dynamoDbLocalConfig';
@@ -34,6 +35,7 @@ async function createConfiguration() {
       name: 'aws',
       region: 'eu-central-1',
       runtime: 'nodejs18.x',
+      stage: '${opt:stage, "dev"}',
       apiGateway: {
         minimumCompressionSize: 1024,
         shouldStartNameWithService: true,
@@ -41,9 +43,20 @@ async function createConfiguration() {
       environment: {
         AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
         NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
+        STAGE: '${self:provider.stage}',
+        API_BASE_URL: {
+          'Fn::Join': [
+            '',
+            [
+              'https://',
+              { Ref: 'ApiGatewayRestApi' },
+              '.execute-api.${self:provider.region}.amazonaws.com/${self:provider.stage}',
+            ],
+          ],
+        },
         USERS_TABLE: '${self:custom.usersTable}',
         SHORT_LINKS_TABLE: '${self:custom.shortLinksTable}',
-        JWE_EXPIRES_IN: process.env.JWE_EXPIRES_IN ?? '20000', // millis (20 seconds)
+        JWE_EXPIRES_IN: process.env.JWE_EXPIRES_IN ?? '305000', // millis (305 seconds)
         SHORT_LINK_LENGTH: process.env.SHORT_LINK_LENGTH ?? '6',
         PUBLIC_KEY: publicKey,
         PRIVATE_KEY: privateKey,
@@ -59,6 +72,7 @@ async function createConfiguration() {
       createShortLink,
       getShortLinks,
       deleteShortLink,
+      rootHandler,
     },
     resources: {
       Resources: {
