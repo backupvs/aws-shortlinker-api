@@ -36,8 +36,9 @@ export class ShortLinkService {
       isOneTime,
       ownerId
     );
+    await this.shortLinksRepository.create(shortLink);
 
-    return this.shortLinksRepository.create(shortLink);
+    return shortLink.pathId;
   }
 
   async getByOwnerId(ownerId: string) {
