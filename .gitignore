@@ -1,0 +1,12 @@
+# package directories
+node_modules
+
+# Serverless directories
+.serverless
+.dynamodb
+
+# esbuild directories
+.esbuild
+
+# keys
+.keys
