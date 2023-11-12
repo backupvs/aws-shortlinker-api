@@ -15,7 +15,7 @@ export class UsersRepository {
   async create(user: User): Promise<Omit<User, 'password'>> {
     const params: PutCommandInput = {
       TableName: this.usersTableName,
-      Item: user,
+      Item: { ...user },
     };
 
     await dbClient.send(new PutCommand(params));

@@ -17,7 +17,7 @@ export class ShortLinksRepository {
   async create(shortLink: ShortLink) {
     const params: PutCommandInput = {
       TableName: this.shortLinksTable,
-      Item: shortLink,
+      Item: { ...shortLink },
     };
 
     await dbClient.send(new PutCommand(params));
