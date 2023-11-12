@@ -15,12 +15,18 @@ const shortLinkService = new ShortLinkService(new ShortLinksRepository());
 
 const createShortLink: ValidatedAPIGatewayProxyHandler<typeof schema> = async (event) => {
   try {
-    const result = await shortLinkService.create(
+    const baseUrl = process.env.IS_OFFLINE
+      ? `http://localhost:3000/${process.env.STAGE}`
+      : process.env.API_BASE_URL;
+
+    const pathId = await shortLinkService.create(
       event.body,
       event.requestContext.authorizer.principalId
     );
 
-    return formatJSONSuccess(HttpCodes.Created, result);
+    return formatJSONSuccess(HttpCodes.Created, {
+      shortLink: `${baseUrl}/${pathId}`,
+    });
   } catch (err) {
     let statusCode = 500;
     let message = 'Internal Error';
