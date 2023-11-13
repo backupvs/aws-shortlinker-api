@@ -1,5 +1,6 @@
 export class ShortLink {
   public readonly visitsCount: number = 0;
+  public readonly isActive: boolean = true;
 
   constructor(
     public readonly shortLinkId: string,

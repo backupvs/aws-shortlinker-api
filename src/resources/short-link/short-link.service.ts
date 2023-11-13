@@ -45,13 +45,15 @@ export class ShortLinkService {
     return this.shortLinksRepository.findByOwnerId(ownerId);
   }
 
-  async deleteById(id: string) {
+  async deactivateById(id: string) {
     const shortLink = await this.shortLinksRepository.findById(id);
 
     if (!shortLink) {
-      throw new HttpError(HttpCodes.NotFound, 'Short link with given ID was now found');
+      throw new HttpError(HttpCodes.NotFound, 'Short link with given ID was not found');
     }
 
-    return this.shortLinksRepository.deleteById(id);
+    await this.shortLinksRepository.deactivateById(id);
+
+    return id;
   }
 }

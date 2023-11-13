@@ -18,4 +18,8 @@ export class RootService {
   async incrementVisitsCount(shortLinkId: string) {
     return this.shortLinksRepository.incrementVisitsCounterById(shortLinkId);
   }
+
+  async deactivateLink(shortLinkId: string) {
+    return this.shortLinksRepository.deactivateById(shortLinkId);
+  }
 }

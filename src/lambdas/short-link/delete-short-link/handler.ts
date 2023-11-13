@@ -8,9 +8,9 @@ import { middify } from '@libs/middify';
 const shortLinkService = new ShortLinkService(new ShortLinksRepository());
 
 const deleteShortLink: APIGatewayProxyHandler = async (event) => {
-  const result = await shortLinkService.deleteById(event.pathParameters.id);
+  await shortLinkService.deactivateById(event.pathParameters.id);
 
-  return formatJSONSuccess(HttpCodes.Ok, result);
+  return formatJSONSuccess(HttpCodes.NoContent, {});
 };
 
 export const main = middify(deleteShortLink);

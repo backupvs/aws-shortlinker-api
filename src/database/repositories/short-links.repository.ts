@@ -3,8 +3,6 @@ import {
   PutCommandInput,
   QueryCommandInput,
   QueryCommand,
-  DeleteCommand,
-  DeleteCommandInput,
   GetCommandInput,
   GetCommand,
 } from '@aws-sdk/lib-dynamodb';
@@ -94,18 +92,23 @@ export class ShortLinksRepository {
     return dbClient.send(new UpdateItemCommand(params));
   }
 
-  async deleteById(id: string) {
-    const params: DeleteCommandInput = {
+  async deactivateById(id: string) {
+    const params: UpdateItemCommandInput = {
       TableName: this.shortLinksTable,
       Key: {
-        shortLinkId: id,
+        shortLinkId: {
+          S: id,
+        },
+      },
+      AttributeUpdates: {
+        isActive: {
+          Value: {
+            BOOL: false,
+          },
+        },
       },
     };
 
-    await dbClient.send(new DeleteCommand(params));
-
-    return {
-      shortLinkId: id,
-    };
+    return dbClient.send(new UpdateItemCommand(params));
   }
 }

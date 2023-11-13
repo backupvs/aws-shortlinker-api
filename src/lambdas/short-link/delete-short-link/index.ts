@@ -6,8 +6,8 @@ export default {
   events: [
     {
       http: {
-        method: 'delete',
-        path: 'short-link/{id}',
+        method: 'patch',
+        path: 'short-link/{id}/deactivate',
         authorizer: {
           name: Authorizers.JweAuthorizer,
         },
