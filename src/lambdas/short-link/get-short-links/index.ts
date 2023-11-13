@@ -1,4 +1,4 @@
-import { Lambdas } from '@lambdas/index';
+import { Authorizers } from '@lambdas/index';
 import { handlerPath } from '@libs/handler-resolver';
 
 export default {
@@ -9,7 +9,7 @@ export default {
         method: 'get',
         path: 'short-link',
         authorizer: {
-          name: Lambdas.JweAuthorizer,
+          name: Authorizers.JweAuthorizer,
         },
       },
     },

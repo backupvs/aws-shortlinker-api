@@ -1,4 +1,4 @@
-import { Lambdas } from '@lambdas/index';
+import { Authorizers } from '@lambdas/index';
 import schema from './schema';
 import { handlerPath } from '@libs/handler-resolver';
 
@@ -15,7 +15,7 @@ export default {
           },
         },
         authorizer: {
-          name: Lambdas.JweAuthorizer,
+          name: Authorizers.JweAuthorizer,
         },
       },
     },

@@ -1,11 +1,5 @@
-export enum Lambdas {
+export enum Authorizers {
   JweAuthorizer = 'jweAuthorizer',
-  SignUp = 'signUp',
-  SignIn = 'signIn',
-  CreateShortLink = 'createShortLink',
-  GetShortLinks = 'getShortLinks',
-  DeleteShortLink = 'deleteShortLink',
-  RootHandler = 'rootHandler',
 }
 
 export { default as jweAuthorizer } from './jwe-authorizer';
