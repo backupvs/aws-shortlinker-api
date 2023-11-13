@@ -1,4 +1,5 @@
 import { Authorizers } from '@lambdas/index';
+import schema from './schema';
 import { handlerPath } from '@libs/handler-resolver';
 
 export default {
@@ -6,8 +7,13 @@ export default {
   events: [
     {
       http: {
-        method: 'get',
-        path: 'short-link',
+        method: 'post',
+        path: 'short-links',
+        request: {
+          schemas: {
+            'application/json': schema,
+          },
+        },
         authorizer: {
           name: Authorizers.JweAuthorizer,
         },

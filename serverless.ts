@@ -5,7 +5,7 @@ import {
   jweAuthorizer,
   createShortLink,
   getShortLinks,
-  deleteShortLink,
+  deactivateShortLink,
   rootHandler,
 } from '@lambdas/index';
 import { esBuildConfig } from 'src/serverless/esBuildConfig';
@@ -71,7 +71,7 @@ async function createConfiguration() {
       signIn,
       createShortLink,
       getShortLinks,
-      deleteShortLink,
+      deleteShortLink: deactivateShortLink,
       rootHandler,
     },
     resources: {

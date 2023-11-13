@@ -5,10 +5,10 @@ import {
 import { middify } from '@libs/middify';
 import schema from './schema';
 import { HttpCodes } from '@libs/http-codes.enum';
-import { ShortLinkService } from 'src/resources/short-link/short-link.service';
+import { ShortLinksService } from 'src/resources/short-links/short-links.service';
 import { ShortLinksRepository } from 'src/database/repositories/short-links.repository';
 
-const shortLinkService = new ShortLinkService(new ShortLinksRepository());
+const shortLinkService = new ShortLinksService(new ShortLinksRepository());
 
 const createShortLink: ValidatedAPIGatewayProxyHandler<typeof schema> = async (event) => {
   const baseUrl = process.env.IS_OFFLINE

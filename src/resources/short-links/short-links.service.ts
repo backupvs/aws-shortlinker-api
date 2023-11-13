@@ -6,7 +6,7 @@ import HttpError from 'src/errors/HttpError';
 import { HttpCodes } from '@libs/http-codes.enum';
 import { nanoid } from 'nanoid';
 
-export class ShortLinkService {
+export class ShortLinksService {
   constructor(private readonly shortLinksRepository: ShortLinksRepository) {}
 
   async create(createShortLinkDto: CreateShortLinkDto, ownerId: string) {

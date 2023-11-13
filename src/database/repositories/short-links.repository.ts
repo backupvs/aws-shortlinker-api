@@ -8,7 +8,7 @@ import {
 } from '@aws-sdk/lib-dynamodb';
 import { UpdateItemCommand, UpdateItemCommandInput } from '@aws-sdk/client-dynamodb';
 import { dbClient } from '../dynamo-db';
-import { ShortLink } from 'src/resources/short-link/short-link.entity';
+import { ShortLink } from 'src/resources/short-links/short-link.entity';
 
 export class ShortLinksRepository {
   private readonly shortLinksTable = process.env.SHORT_LINKS_TABLE;

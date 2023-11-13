@@ -7,7 +7,7 @@ export default {
     {
       http: {
         method: 'patch',
-        path: 'short-link/{id}/deactivate',
+        path: 'short-links/{id}/deactivate',
         authorizer: {
           name: Authorizers.JweAuthorizer,
         },

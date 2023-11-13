@@ -1,16 +1,16 @@
 import { formatJSONSuccess } from '@libs/api-gateway';
 import { HttpCodes } from '@libs/http-codes.enum';
-import { ShortLinkService } from 'src/resources/short-link/short-link.service';
+import { ShortLinksService } from 'src/resources/short-links/short-links.service';
 import { ShortLinksRepository } from 'src/database/repositories/short-links.repository';
 import { APIGatewayProxyHandler } from 'aws-lambda';
 import { middify } from '@libs/middify';
 
-const shortLinkService = new ShortLinkService(new ShortLinksRepository());
+const shortLinkService = new ShortLinksService(new ShortLinksRepository());
 
-const deleteShortLink: APIGatewayProxyHandler = async (event) => {
+const deactivateShortLink: APIGatewayProxyHandler = async (event) => {
   await shortLinkService.deactivateById(event.pathParameters.id);
 
   return formatJSONSuccess(HttpCodes.NoContent, {});
 };
 
-export const main = middify(deleteShortLink);
+export const main = middify(deactivateShortLink);

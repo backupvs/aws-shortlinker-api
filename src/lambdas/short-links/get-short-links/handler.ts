@@ -1,11 +1,11 @@
 import { formatJSONSuccess } from '@libs/api-gateway';
 import { HttpCodes } from '@libs/http-codes.enum';
-import { ShortLinkService } from 'src/resources/short-link/short-link.service';
+import { ShortLinksService } from 'src/resources/short-links/short-links.service';
 import { ShortLinksRepository } from 'src/database/repositories/short-links.repository';
 import { APIGatewayProxyHandler } from 'aws-lambda';
 import { middify } from '@libs/middify';
 
-const shortLinkService = new ShortLinkService(new ShortLinksRepository());
+const shortLinkService = new ShortLinksService(new ShortLinksRepository());
 
 const getShortLinks: APIGatewayProxyHandler = async (event) => {
   const result = await shortLinkService.getByOwnerId(
