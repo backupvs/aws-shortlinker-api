@@ -45,10 +45,6 @@ export class ShortLinkService {
     return this.shortLinksRepository.findByOwnerId(ownerId);
   }
 
-  async getByPathId(pathId: string) {
-    return this.shortLinksRepository.findByPathId(pathId);
-  }
-
   async deleteById(id: string) {
     const shortLink = await this.shortLinksRepository.findById(id);
 

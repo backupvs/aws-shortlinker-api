@@ -8,6 +8,7 @@ import {
   GetCommandInput,
   GetCommand,
 } from '@aws-sdk/lib-dynamodb';
+import { UpdateItemCommand, UpdateItemCommandInput } from '@aws-sdk/client-dynamodb';
 import { dbClient } from '../dynamo-db';
 import { ShortLink } from 'src/resources/short-link/short-link.entity';
 
@@ -70,6 +71,27 @@ export class ShortLinksRepository {
     }
 
     return null;
+  }
+
+  async incrementVisitsCounterById(id: string, increment: number = 1) {
+    const params: UpdateItemCommandInput = {
+      TableName: this.shortLinksTable,
+      Key: {
+        shortLinkId: {
+          S: id,
+        },
+      },
+      AttributeUpdates: {
+        visitsCount: {
+          Value: {
+            N: `${increment}`,
+          },
+          Action: 'ADD',
+        },
+      },
+    };
+
+    return dbClient.send(new UpdateItemCommand(params));
   }
 
   async deleteById(id: string) {
