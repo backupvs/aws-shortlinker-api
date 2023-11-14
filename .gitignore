@@ -3,6 +3,8 @@ node_modules
 
 # Serverless directories
 .serverless
+
+# Offline services
 .dynamodb
 
 # esbuild directories
