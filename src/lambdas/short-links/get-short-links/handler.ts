@@ -5,10 +5,10 @@ import { ShortLinksRepository } from 'src/database/repositories/short-links.repo
 import { APIGatewayProxyHandler } from 'aws-lambda';
 import { middify } from '@libs/middify';
 
-const shortLinkService = new ShortLinksService(new ShortLinksRepository());
+const shortLinksService = new ShortLinksService(new ShortLinksRepository());
 
 const getShortLinks: APIGatewayProxyHandler = async (event) => {
-  const result = await shortLinkService.getByOwnerId(
+  const result = await shortLinksService.findByOwnerId(
     event.requestContext.authorizer.principalId
   );
 
