@@ -15,8 +15,8 @@ export class ShortLinksService {
     let exisitingShortLink: ShortLink;
     let pathId: string;
 
-    // Generate a new short pathId if a collision occurs,
-    // continuing to do so until it becomes unique.
+    // If a collision occurs continue to generate a new short pathId,
+    // until it becomes unique.
     do {
       pathId = nanoid(+process.env.SHORT_LINK_LENGTH);
       exisitingShortLink = await this.shortLinksRepository.findByPathId(pathId);
@@ -41,8 +41,12 @@ export class ShortLinksService {
     return shortLink.pathId;
   }
 
-  async getByOwnerId(ownerId: string) {
+  async findByOwnerId(ownerId: string) {
     return this.shortLinksRepository.findByOwnerId(ownerId);
+  }
+
+  async findExpiredActive() {
+    return this.shortLinksRepository.findExpiredActive();
   }
 
   async deactivateById(id: string) {

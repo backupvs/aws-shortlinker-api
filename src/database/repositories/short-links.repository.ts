@@ -5,6 +5,8 @@ import {
   QueryCommand,
   GetCommandInput,
   GetCommand,
+  ScanCommand,
+  ScanCommandInput,
 } from '@aws-sdk/lib-dynamodb';
 import { UpdateItemCommand, UpdateItemCommandInput } from '@aws-sdk/client-dynamodb';
 import { dbClient } from '../dynamo-db';
@@ -12,6 +14,21 @@ import { ShortLink } from 'src/resources/short-links/short-link.entity';
 
 export class ShortLinksRepository {
   private readonly shortLinksTable = process.env.SHORT_LINKS_TABLE;
+
+  async findExpiredActive() {
+    const params: ScanCommandInput = {
+      TableName: this.shortLinksTable,
+      FilterExpression: 'expirationTime <= :currentTime and isActive = :active',
+      ExpressionAttributeValues: {
+        ':currentTime': Date.now(),
+        ':active': true,
+      },
+    };
+
+    const result = await dbClient.send(new ScanCommand(params));
+
+    return result.Items as ShortLink[];
+  }
 
   async create(shortLink: ShortLink) {
     const params: PutCommandInput = {

@@ -9,3 +9,5 @@ export { default as createShortLink } from './short-links/create-short-link';
 export { default as getShortLinks } from './short-links/get-short-links';
 export { default as deactivateShortLink } from './short-links/deactivate-short-link';
 export { default as rootHandler } from './root';
+export { default as deactivateExpiredShortLinks } from './cron/deactivate-expired-short-links';
+export { default as sendNotifications } from './send-notifications';

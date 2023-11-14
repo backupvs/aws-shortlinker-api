@@ -7,13 +7,16 @@ import {
   getShortLinks,
   deactivateShortLink,
   rootHandler,
+  deactivateExpiredShortLinks,
+  sendNotifications,
 } from '@lambdas/index';
 import { esBuildConfig } from 'src/serverless/esBuildConfig';
 import { dynamoDbLocalConfig } from 'src/serverless/dynamoDbLocalConfig';
-import { dynamoDbAccessLambdaRole } from 'src/serverless/dynamoDbAccessLambdaRole';
+import { accessLambdaRole } from 'src/serverless/accessLambdaRole';
 import { shortLinksTable, usersTable } from 'src/serverless/dynamoDbResources';
 import { FileKeysService } from 'src/common/keys-service/file-keys.service';
 import { IKeysService } from 'src/common/keys-service/keys.service.interface';
+import { sqsLocalConfig } from 'src/serverless/sqsLocalConfig';
 
 async function createConfiguration() {
   let publicKey: string;
@@ -30,7 +33,13 @@ async function createConfiguration() {
   const serverlessConfiguration: AWS = {
     service: 'aws-shortlinker-api',
     frameworkVersion: '3',
-    plugins: ['serverless-esbuild', 'serverless-dynamodb', 'serverless-offline'],
+    plugins: [
+      'serverless-esbuild',
+      'serverless-dynamodb',
+      'serverless-offline-sqs',
+      'serverless-offline',
+    ],
+    configValidationMode: 'error',
     provider: {
       name: 'aws',
       region: 'eu-central-1',
@@ -44,6 +53,7 @@ async function createConfiguration() {
         AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
         NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
         STAGE: '${self:provider.stage}',
+        REGION: '${self:provider.region}',
         API_BASE_URL: {
           'Fn::Join': [
             '',
@@ -56,13 +66,14 @@ async function createConfiguration() {
         },
         USERS_TABLE: '${self:custom.usersTable}',
         SHORT_LINKS_TABLE: '${self:custom.shortLinksTable}',
+        NOTIFICATIONS_QUEUE_URL: '${self:custom.notificationsQueueUrl}',
         JWE_EXPIRES_IN: process.env.JWE_EXPIRES_IN ?? '305000', // millis (305 seconds)
         SHORT_LINK_LENGTH: process.env.SHORT_LINK_LENGTH ?? '6',
         PUBLIC_KEY: publicKey,
         PRIVATE_KEY: privateKey,
       },
       iam: {
-        role: dynamoDbAccessLambdaRole,
+        role: accessLambdaRole,
       },
     },
     functions: {
@@ -71,21 +82,34 @@ async function createConfiguration() {
       signIn,
       createShortLink,
       getShortLinks,
-      deleteShortLink: deactivateShortLink,
+      deactivateShortLink,
       rootHandler,
+      deactivateExpiredShortLinks,
+      sendNotifications,
     },
     resources: {
       Resources: {
         UsersTable: usersTable,
         ShortLinksTable: shortLinksTable,
+        NotificationsQueue: {
+          Type: 'AWS::SQS::Queue',
+          Properties: {
+            QueueName: '${self:custom.notificationsQueue}',
+            FifoQueue: true,
+          },
+        },
       },
     },
     package: { individually: true },
     custom: {
-      usersTable: 'users-table-${sls:stage}',
-      shortLinksTable: 'short-links-table-${sls:stage}',
+      usersTable: 'users-table-${self:provider.stage}',
+      shortLinksTable: 'short-links-table-${self:provider.stage}',
+      notificationsQueue: 'notifications-queue-${self:provider.stage}.fifo',
+      notificationsQueueUrl:
+        'https://sqs.${self:provider.region}.amazonaws.com/${aws:accountId}/${self:custom.notificationsQueue}',
       esbuild: esBuildConfig,
       dynamodb: dynamoDbLocalConfig,
+      'serverless-offline-sqs': sqsLocalConfig,
     },
   };
 

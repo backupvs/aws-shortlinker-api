@@ -3,14 +3,16 @@
   "version": "1.0.0",
   "main": "serverless.ts",
   "scripts": {
+    "generate-keys": "node src/utils/generate-keys.js",
+    "dynamodb:install": "npx serverless dynamodb install",
+    "elasticmq:start": "docker run --name elasticmq --rm -p 9324:9324 -p 9325:9325 softwaremill/elasticmq-native",
     "offline": "npx serverless offline start",
     "deploy:dev": "npx serverless deploy --stage dev",
-    "deploy:prod": "npx serverless deploy --stage prod",
-    "dynamodb:install": "npx serverless dynamodb install",
-    "generate-keys": "node src/utils/generate-keys.js"
+    "deploy:prod": "npx serverless deploy --stage prod"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.445.0",
+    "@aws-sdk/client-sqs": "^3.450.0",
     "@aws-sdk/lib-dynamodb": "^3.445.0",
     "@middy/core": "^3.4.0",
     "@middy/http-json-body-parser": "^3.4.0",
@@ -27,6 +29,7 @@
     "serverless-dynamodb": "^0.2.47",
     "serverless-esbuild": "^1.23.3",
     "serverless-offline": "^13.2.1",
+    "serverless-offline-sqs": "^8.0.0",
     "ts-node": "^10.4.0",
     "tsconfig-paths": "^3.9.0",
     "typescript": "^4.1.3"
