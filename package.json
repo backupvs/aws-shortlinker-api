@@ -30,6 +30,7 @@
     "serverless-dynamodb": "^0.2.47",
     "serverless-esbuild": "^1.23.3",
     "serverless-offline": "^13.2.1",
+    "serverless-offline-aws-eventbridge": "^2.1.0",
     "serverless-offline-sqs": "^8.0.0",
     "ts-node": "^10.4.0",
     "tsconfig-paths": "^3.9.0",

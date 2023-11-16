@@ -19,6 +19,7 @@ import { FileKeysService } from 'src/common/keys-service/file-keys.service';
 import { IKeysService, Keys } from 'src/common/keys-service/keys.service.interface';
 import { sqsLocalConfig } from 'src/serverless-configs/sqsLocalConfig';
 import { notificationsQueueResource } from 'src/serverless-configs/notificationsQueueResource';
+import { eventBridgeLocalConfig } from 'src/serverless-configs/eventBridgeLocalConfig';
 
 validateEnv(process.env, {
   JWE_EXPIRES_IN: num(),
@@ -109,6 +110,7 @@ async function createConfiguration() {
       esbuild: esBuildConfig,
       dynamodb: dynamoDbLocalConfig,
       'serverless-offline-sqs': sqsLocalConfig,
+      'serverless-offline-aws-eventbridge': eventBridgeLocalConfig,
     },
   };
 
