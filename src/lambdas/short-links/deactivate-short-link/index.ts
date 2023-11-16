@@ -10,6 +10,7 @@ export default {
         path: 'short-links/{id}/deactivate',
         authorizer: {
           name: Authorizers.JweAuthorizer,
+          resultTtlInSeconds: 0,
         },
       },
     },

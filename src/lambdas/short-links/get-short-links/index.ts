@@ -10,6 +10,7 @@ export default {
         path: 'short-links',
         authorizer: {
           name: Authorizers.JweAuthorizer,
+          resultTtlInSeconds: 0,
         },
       },
     },

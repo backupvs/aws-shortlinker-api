@@ -16,6 +16,7 @@ export default {
         },
         authorizer: {
           name: Authorizers.JweAuthorizer,
+          resultTtlInSeconds: 0,
         },
       },
     },
