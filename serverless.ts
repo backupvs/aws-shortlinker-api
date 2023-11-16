@@ -24,6 +24,7 @@ import { eventBridgeLocalConfig } from 'src/serverless-configs/eventBridgeLocalC
 validateEnv(process.env, {
   JWE_EXPIRES_IN: num(),
   SHORT_LINK_LENGTH: num(),
+  SES_SENDER_EMAIL: email(),
 });
 
 async function createConfiguration() {
@@ -75,6 +76,7 @@ async function createConfiguration() {
         NOTIFICATIONS_QUEUE_URL: '${self:custom.notificationsQueueUrl}',
         JWE_EXPIRES_IN: process.env.JWE_EXPIRES_IN,
         SHORT_LINK_LENGTH: process.env.SHORT_LINK_LENGTH,
+        SES_SENDER_EMAIL: process.env.SES_SENDER_EMAIL,
         PUBLIC_KEY: keys.publicKey,
         PRIVATE_KEY: keys.privateKey,
       },
