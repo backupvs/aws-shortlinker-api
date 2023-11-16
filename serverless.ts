@@ -106,7 +106,7 @@ async function createConfiguration() {
     custom: {
       usersTable: 'users-table-${self:provider.stage}',
       shortLinksTable: 'short-links-table-${self:provider.stage}',
-      notificationsQueue: 'notifications-queue-${self:provider.stage}.fifo',
+      notificationsQueue: 'notifications-queue-${self:provider.stage}',
       notificationsQueueUrl:
         'https://sqs.${self:provider.region}.amazonaws.com/${aws:accountId}/${self:custom.notificationsQueue}',
       esbuild: esBuildConfig,
