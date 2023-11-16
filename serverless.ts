@@ -15,16 +15,14 @@ import { dynamoDbLocalConfig } from 'src/serverless-configs/dynamoDbLocalConfig'
 import { accessLambdaRole } from 'src/serverless-configs/accessLambdaRole';
 import { shortLinksTable, usersTable } from 'src/serverless-configs/dynamoDbResources';
 import { FileKeysService } from 'src/common/keys-service/file-keys.service';
-import { IKeysService } from 'src/common/keys-service/keys.service.interface';
+import { IKeysService, Keys } from 'src/common/keys-service/keys.service.interface';
 import { sqsLocalConfig } from 'src/serverless-configs/sqsLocalConfig';
 
 async function createConfiguration() {
-  let publicKey: string;
-  let privateKey: string;
+  let keys: Keys;
   try {
-    const keysService: IKeysService = new FileKeysService('.keys');
-    publicKey = await keysService.getPublicKey();
-    privateKey = await keysService.getPrivateKey();
+    const keysService: IKeysService = new FileKeysService('./.keys');
+    keys = await keysService.importKeys();
   } catch (err) {
     console.error('Error while importing keys: ', err);
     process.exit(1);
@@ -69,8 +67,8 @@ async function createConfiguration() {
         NOTIFICATIONS_QUEUE_URL: '${self:custom.notificationsQueueUrl}',
         JWE_EXPIRES_IN: process.env.JWE_EXPIRES_IN ?? '305000', // millis (305 seconds)
         SHORT_LINK_LENGTH: process.env.SHORT_LINK_LENGTH ?? '6',
-        PUBLIC_KEY: publicKey,
-        PRIVATE_KEY: privateKey,
+        PUBLIC_KEY: keys.publicKey,
+        PRIVATE_KEY: keys.privateKey,
       },
       iam: {
         role: accessLambdaRole,

@@ -1,15 +1,21 @@
-import { IKeysService } from './keys.service.interface';
+import { IKeysService, Keys } from './keys.service.interface';
 import { join } from 'node:path';
 import { readFile } from 'node:fs/promises';
 
 export class FileKeysService implements IKeysService {
-  constructor(private readonly keysDir: string) {}
+  constructor(private readonly keysDirPath: string) {}
 
-  getPublicKey(): Promise<string> {
-    return readFile(join(process.cwd(), this.keysDir, 'public.pem'), 'utf-8');
-  }
+  async importKeys(): Promise<Keys> {
+    const privateKeyPath = join(this.keysDirPath, 'private.pem');
+    const publicKeyPath = join(this.keysDirPath, 'public.pem');
 
-  getPrivateKey(): Promise<string> {
-    return readFile(join(process.cwd(), this.keysDir, 'private.pem'), 'utf-8');
+    const [privateKey, publicKey] = await Promise.all(
+      [privateKeyPath, publicKeyPath].map((path) => readFile(path, 'utf-8'))
+    );
+
+    return {
+      privateKey,
+      publicKey,
+    };
   }
 }

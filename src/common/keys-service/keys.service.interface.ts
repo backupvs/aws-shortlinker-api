@@ -1,4 +1,8 @@
+export type Keys = {
+  privateKey: string;
+  publicKey: string;
+};
+
 export interface IKeysService {
-  getPublicKey(): Promise<string>;
-  getPrivateKey(): Promise<string>;
+  importKeys(): Promise<Keys>;
 }
