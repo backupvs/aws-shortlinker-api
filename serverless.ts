@@ -45,6 +45,7 @@ async function createConfiguration() {
       'serverless-dynamodb',
       'serverless-offline-sqs',
       'serverless-offline',
+      'serverless-offline-aws-eventbridge',
     ],
     configValidationMode: 'error',
     provider: {
