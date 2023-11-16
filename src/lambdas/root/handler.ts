@@ -3,21 +3,21 @@ import { HttpCodes } from '@libs/http-codes.enum';
 import { middify } from '@libs/middify';
 import { APIGatewayProxyHandler } from 'aws-lambda';
 import { ShortLinksRepository } from 'src/database/repositories/short-links.repository';
-import { RootService } from 'src/resources/root/root.service';
+import { ShortLinksService } from 'src/resources/short-links/short-links.service';
 
-const rootService = new RootService(new ShortLinksRepository());
+const shortLinksService = new ShortLinksService(new ShortLinksRepository());
 
 export const rootHandler: APIGatewayProxyHandler = async (event) => {
-  const shortLink = await rootService.findByPathId(event.pathParameters.pathId);
+  const shortLink = await shortLinksService.findByPathId(event.pathParameters.pathId);
 
   if (!shortLink.isActive) {
     return formatJSONFailed(HttpCodes.Gone, 'This URL has been deactivated');
   }
 
   if (shortLink.isOneTime) {
-    await rootService.deactivateLink(shortLink.shortLinkId);
+    await shortLinksService.deactivateById(shortLink.shortLinkId);
   } else {
-    await rootService.incrementVisitsCount(shortLink.shortLinkId);
+    await shortLinksService.incrementVisitsCount(shortLink.shortLinkId);
   }
 
   return formatRedirect(shortLink.destination);

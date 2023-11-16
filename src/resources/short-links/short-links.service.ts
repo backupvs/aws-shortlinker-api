@@ -15,7 +15,7 @@ export class ShortLinksService {
     let exisitingShortLink: ShortLink;
     let pathId: string;
 
-    // If a collision occurs continue to generate a new short pathId,
+    // Generating a new short pathId if a collision occurs,
     // until it becomes unique.
     do {
       pathId = nanoid(+process.env.SHORT_LINK_LENGTH);
@@ -47,6 +47,20 @@ export class ShortLinksService {
 
   async findExpiredActive() {
     return this.shortLinksRepository.findExpiredActive();
+  }
+
+  async findByPathId(shortLinkPathId: string) {
+    const shortLink = await this.shortLinksRepository.findByPathId(shortLinkPathId);
+
+    if (!shortLink) {
+      throw new HttpError(HttpCodes.NotFound, 'URL with give path ID was not found');
+    }
+
+    return shortLink;
+  }
+
+  async incrementVisitsCount(shortLinkId: string) {
+    return this.shortLinksRepository.incrementVisitsCounterById(shortLinkId);
   }
 
   async deactivateById(id: string) {
