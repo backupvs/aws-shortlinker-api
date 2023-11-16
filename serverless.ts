@@ -1,4 +1,5 @@
 import { AWS } from '@serverless/typescript';
+import { cleanEnv as validateEnv, num, email } from 'envalid';
 import {
   signUp,
   signIn,
@@ -18,6 +19,11 @@ import { FileKeysService } from 'src/common/keys-service/file-keys.service';
 import { IKeysService, Keys } from 'src/common/keys-service/keys.service.interface';
 import { sqsLocalConfig } from 'src/serverless-configs/sqsLocalConfig';
 import { notificationsQueueResource } from 'src/serverless-configs/notificationsQueueResource';
+
+validateEnv(process.env, {
+  JWE_EXPIRES_IN: num(),
+  SHORT_LINK_LENGTH: num(),
+});
 
 async function createConfiguration() {
   let keys: Keys;
@@ -66,8 +72,8 @@ async function createConfiguration() {
         USERS_TABLE: '${self:custom.usersTable}',
         SHORT_LINKS_TABLE: '${self:custom.shortLinksTable}',
         NOTIFICATIONS_QUEUE_URL: '${self:custom.notificationsQueueUrl}',
-        JWE_EXPIRES_IN: process.env.JWE_EXPIRES_IN ?? '305000', // millis (305 seconds)
-        SHORT_LINK_LENGTH: process.env.SHORT_LINK_LENGTH ?? '6',
+        JWE_EXPIRES_IN: process.env.JWE_EXPIRES_IN,
+        SHORT_LINK_LENGTH: process.env.SHORT_LINK_LENGTH,
         PUBLIC_KEY: keys.publicKey,
         PRIVATE_KEY: keys.privateKey,
       },
