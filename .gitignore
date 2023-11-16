@@ -10,5 +10,6 @@ node_modules
 # esbuild directories
 .esbuild
 
-# keys
+# Secrets
+*.env
 .keys
