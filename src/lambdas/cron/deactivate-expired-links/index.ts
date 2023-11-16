@@ -4,9 +4,8 @@ export default {
   handler: `${handlerPath(__dirname)}/handler.main`,
   events: [
     {
-      schedule: {
-        rate: ['rate(1 minute)'],
-        enabled: true,
+      eventBridge: {
+        schedule: 'cron(0/1 * * * ? *)',
       },
     },
   ],

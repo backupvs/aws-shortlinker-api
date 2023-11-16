@@ -26,6 +26,7 @@ generateKeyPair('rsa', options, (err, publicKey, privateKey) => {
   try {
     writeFileSync(join(keysDir, 'private.pem'), privateKeyPem, { flag: 'wx' });
     writeFileSync(join(keysDir, 'public.pem'), publicKeyPem, { flag: 'wx' });
+    console.log(`Keys has been generated and saved to ${keysDir}`);
   } catch (err) {
     if (err.errno && err.errno === -4075) {
       console.error('Keys already exists');

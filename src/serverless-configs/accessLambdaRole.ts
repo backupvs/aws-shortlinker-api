@@ -1,5 +1,5 @@
 export const accessLambdaRole = {
-  name: 'dynamodb-access-lambdaRole',
+  name: 'access-lambdaRole',
   statements: [
     {
       Effect: 'Allow',
@@ -15,6 +15,11 @@ export const accessLambdaRole = {
       Resource: [
         'arn:aws:sqs:${self:provider.region}:${aws:accountId}:${self:custom.notificationsQueue}*',
       ],
+    },
+    {
+      Effect: 'Allow',
+      Action: 'ses:*',
+      Resource: [`arn:aws:ses:*`],
     },
   ],
 };

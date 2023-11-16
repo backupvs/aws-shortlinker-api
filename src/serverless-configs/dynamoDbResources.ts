@@ -1,5 +1,3 @@
-// TODO global tables
-
 export const usersTable = {
   Type: 'AWS::DynamoDB::Table',
   Properties: {

@@ -14,6 +14,7 @@ export const jweAuthorizer: APIGatewayTokenAuthorizerHandler = async (event) => 
     token,
     process.env.PRIVATE_KEY
   );
+
   if (!payload) {
     return {
       principalId: null,
