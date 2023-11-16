@@ -10,13 +10,13 @@ import {
   deactivateExpiredShortLinks,
   sendNotifications,
 } from '@lambdas/index';
-import { esBuildConfig } from 'src/serverless/esBuildConfig';
-import { dynamoDbLocalConfig } from 'src/serverless/dynamoDbLocalConfig';
-import { accessLambdaRole } from 'src/serverless/accessLambdaRole';
-import { shortLinksTable, usersTable } from 'src/serverless/dynamoDbResources';
+import { esBuildConfig } from 'src/serverless-configs/esBuildConfig';
+import { dynamoDbLocalConfig } from 'src/serverless-configs/dynamoDbLocalConfig';
+import { accessLambdaRole } from 'src/serverless-configs/accessLambdaRole';
+import { shortLinksTable, usersTable } from 'src/serverless-configs/dynamoDbResources';
 import { FileKeysService } from 'src/common/keys-service/file-keys.service';
 import { IKeysService } from 'src/common/keys-service/keys.service.interface';
-import { sqsLocalConfig } from 'src/serverless/sqsLocalConfig';
+import { sqsLocalConfig } from 'src/serverless-configs/sqsLocalConfig';
 
 async function createConfiguration() {
   let publicKey: string;
