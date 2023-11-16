@@ -1,15 +1,25 @@
 import { SQSHandler } from 'aws-lambda';
-import 'src/sqs-queue/sqs-queue-client';
+import { EmailNotificationsFormatter } from 'src/common/email-notifications-formatter/email-notifications-formatter';
+import { IEmailService } from 'src/common/email-service/email.service.interface';
+import { SesEmailService } from 'src/common/email-service/ses-email.service';
+
+const emailService: IEmailService = new SesEmailService(process.env.SES_SENDER_EMAIL);
+const emailNotificationsFormatter = new EmailNotificationsFormatter();
 
 export const sendNotifications: SQSHandler = async (event) => {
-  // TODO send by SES
-  event.Records.forEach((r) => {
-    const { email, shortLinkId } = JSON.parse(r.body);
+  const promises = event.Records.map(async (record) => {
+    const { type, email, params } = JSON.parse(record.body);
+    const formatterdMessage = emailNotificationsFormatter.format(type, params);
 
-    console.log(
-      `Send letter to ${email} that link with ID "${shortLinkId}" has been deactivated!`
+    return emailService.sendMessage(
+      email,
+      formatterdMessage.message,
+      formatterdMessage.contentType,
+      formatterdMessage.subject
     );
   });
+
+  await Promise.all(promises);
 };
 
 export const main = sendNotifications;
