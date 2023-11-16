@@ -46,6 +46,7 @@ async function createConfiguration() {
       'serverless-offline-sqs',
       'serverless-offline',
       'serverless-offline-aws-eventbridge',
+      'serverless-create-global-dynamodb-table',
     ],
     configValidationMode: 'error',
     provider: {
@@ -114,6 +115,11 @@ async function createConfiguration() {
       dynamodb: dynamoDbLocalConfig,
       'serverless-offline-sqs': sqsLocalConfig,
       'serverless-offline-aws-eventbridge': eventBridgeLocalConfig,
+      globalTables: {
+        version: 'v2',
+        regions: ['us-east-1'],
+        createStack: false,
+      },
     },
   };
 
