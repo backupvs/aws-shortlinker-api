@@ -17,6 +17,7 @@ import { shortLinksTable, usersTable } from 'src/serverless-configs/dynamoDbReso
 import { FileKeysService } from 'src/common/keys-service/file-keys.service';
 import { IKeysService, Keys } from 'src/common/keys-service/keys.service.interface';
 import { sqsLocalConfig } from 'src/serverless-configs/sqsLocalConfig';
+import { notificationsQueueResource } from 'src/serverless-configs/notificationsQueueResource';
 
 async function createConfiguration() {
   let keys: Keys;
@@ -89,13 +90,7 @@ async function createConfiguration() {
       Resources: {
         UsersTable: usersTable,
         ShortLinksTable: shortLinksTable,
-        NotificationsQueue: {
-          Type: 'AWS::SQS::Queue',
-          Properties: {
-            QueueName: '${self:custom.notificationsQueue}',
-            FifoQueue: true,
-          },
-        },
+        NotificationsQueue: notificationsQueueResource,
       },
     },
     package: { individually: true },
