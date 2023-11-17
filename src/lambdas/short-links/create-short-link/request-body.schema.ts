@@ -7,7 +7,7 @@ export default {
     },
     lifetime: {
       type: 'string',
-      pattern: `^(1 day|3 days|7 days)$`,
+      enum: ['1 day', '3 days', '7 days'],
     },
   },
   additionalProperties: false,
