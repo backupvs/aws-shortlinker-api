@@ -1,7 +1,7 @@
 import { formatJSONSuccess, ValidatedAPIGatewayProxyHandler } from '@libs/api-gateway';
 import { middify } from '@libs/middify';
 
-import schema from './schema';
+import requestSchema from './request-body.schema';
 import { AuthService } from 'src/resources/auth/auth.service';
 import { UsersRepository } from 'src/database/repositories/users.repository';
 import { HttpCodes } from '@libs/http-codes.enum';
@@ -14,7 +14,7 @@ const authService = new AuthService(
   new JweTokenService()
 );
 
-const signIn: ValidatedAPIGatewayProxyHandler<typeof schema> = async (event) => {
+const signIn: ValidatedAPIGatewayProxyHandler<typeof requestSchema> = async (event) => {
   const token = await authService.signIn(event.body);
 
   return formatJSONSuccess(HttpCodes.Ok, { token });

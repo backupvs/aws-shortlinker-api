@@ -1,5 +1,6 @@
 import { Authorizers } from '@lambdas/index';
 import { handlerPath } from '@libs/handler-resolver';
+import documentation from './documentation';
 
 export default {
   handler: `${handlerPath(__dirname)}/handler.main`,
@@ -7,11 +8,12 @@ export default {
     {
       http: {
         method: 'patch',
-        path: 'short-links/{id}/deactivate',
+        path: 'short-links/{shortLinkId}/deactivate',
         authorizer: {
           name: Authorizers.JweAuthorizer,
           resultTtlInSeconds: 0,
         },
+        documentation,
       },
     },
   ],

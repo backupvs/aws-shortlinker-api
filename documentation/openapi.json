@@ -1,0 +1,438 @@
+{
+  "openapi": "3.0.0",
+  "components": {
+    "schemas": {
+      "ErrorResponseBody": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "SignUpRequestBody": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 8
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "SignUpResponseBody": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "SignInRequestBody": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 8
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "SignInResponseBody": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateShortLinkRequestBody": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "pattern": "^(http|https)://([A-Za-z0-9-]+.)+[A-Za-z]{2,}(/[A-Za-z0-9?=/-_&]*)*$"
+          },
+          "lifetime": {
+            "type": "string",
+            "enum": [
+              "1 day",
+              "3 days",
+              "7 days"
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "url"
+        ]
+      },
+      "CreateShortLinkResponseBody": {
+        "type": "object",
+        "properties": {
+          "shortLink": {
+            "type": "string"
+          }
+        }
+      },
+      "GetShortLinksResponseBody": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "destination": {
+              "type": "string"
+            },
+            "expirationTime": {
+              "oneOf": [
+                {
+                  "nullable": true,
+                  "type": "number"
+                }
+              ]
+            },
+            "isActive": {
+              "oneOf": [
+                {
+                  "type": "boolean"
+                }
+              ]
+            },
+            "isOneTime": {
+              "oneOf": [
+                {
+                  "type": "boolean"
+                }
+              ]
+            },
+            "ownerId": {
+              "oneOf": [
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "pathId": {
+              "oneOf": [
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "shortLinkId": {
+              "oneOf": [
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "url": {
+              "oneOf": [
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "visitsCount": {
+              "oneOf": [
+                {
+                  "type": "number"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "ShortLinkIdParam": {
+        "type": "string"
+      },
+      "shortLinkId": {
+        "type": "string"
+      },
+      "66eb06d9-fe5d-45b0-abe7-b08294e8f7bf": {}
+    },
+    "securitySchemes": {
+      "bearerToken": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "info": {
+    "title": "Shortlinker API",
+    "description": "API to make short URLs",
+    "version": "1"
+  },
+  "paths": {
+    "/auth/sign-up": {
+      "post": {
+        "summary": "Sign up",
+        "description": "",
+        "operationId": "signUp",
+        "parameters": [],
+        "tags": [],
+        "requestBody": {
+          "description": "User credentials",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignUpRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "JWE token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignUpResponseBody"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "An error message when credentials are invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseBody"
+                }
+              }
+            },
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/auth/sign-in": {
+      "post": {
+        "summary": "Sign in",
+        "description": "",
+        "operationId": "signIn",
+        "parameters": [],
+        "tags": [],
+        "requestBody": {
+          "description": "User credentials",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignInRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "JWE token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignInResponseBody"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "An error message when credentials are invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseBody"
+                }
+              }
+            },
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/short-links": {
+      "post": {
+        "summary": "Create Short Link",
+        "description": "",
+        "operationId": "createShortLink",
+        "parameters": [],
+        "tags": [],
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ],
+        "requestBody": {
+          "description": "Any URL",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateShortLinkRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created short URL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateShortLinkResponseBody"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "An error message when token is missing",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseBody"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "403": {
+            "description": "An error message when token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseBody"
+                }
+              }
+            },
+            "headers": {}
+          }
+        }
+      },
+      "get": {
+        "summary": "Get Short Links",
+        "description": "",
+        "operationId": "getShortLinks",
+        "parameters": [],
+        "tags": [],
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Short Link objects",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetShortLinksResponseBody"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "An error message when token is missing",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseBody"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "403": {
+            "description": "An error message when token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseBody"
+                }
+              }
+            },
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/short-links/{shortLinkId}/deactivate": {
+      "patch": {
+        "summary": "Deactivate Short Link",
+        "description": "Set isActive field of specified Short Link to false",
+        "operationId": "deactivateShortLink",
+        "parameters": [
+          {
+            "name": "shortLinkId",
+            "in": "path",
+            "description": "Short Link ID to deactivate",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/shortLinkId"
+            }
+          }
+        ],
+        "tags": [],
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/66eb06d9-fe5d-45b0-abe7-b08294e8f7bf"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "An error message when token is missing",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseBody"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "403": {
+            "description": "An error message when token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseBody"
+                }
+              }
+            },
+            "headers": {}
+          }
+        }
+      }
+    }
+  }
+}

@@ -20,6 +20,7 @@ import { IKeysService, Keys } from 'src/common/keys-service/keys.service.interfa
 import { sqsLocalConfig } from 'src/serverless-configs/sqsLocalConfig';
 import { notificationsQueueResource } from 'src/serverless-configs/notificationsQueueResource';
 import { eventBridgeLocalConfig } from 'src/serverless-configs/eventBridgeLocalConfig';
+import { openApiDocumentation } from 'src/serverless-configs/openApiDocumentation';
 
 validateEnv(process.env, {
   JWE_EXPIRES_IN: num(),
@@ -47,6 +48,7 @@ async function createConfiguration() {
       'serverless-offline',
       'serverless-offline-aws-eventbridge',
       'serverless-create-global-dynamodb-table',
+      'serverless-openapi-documenter',
     ],
     configValidationMode: 'error',
     provider: {
@@ -120,6 +122,7 @@ async function createConfiguration() {
         regions: ['us-east-1'],
         createStack: false,
       },
+      documentation: openApiDocumentation,
     },
   };
 

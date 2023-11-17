@@ -1,5 +1,6 @@
 import { Authorizers } from '@lambdas/index';
 import { handlerPath } from '@libs/handler-resolver';
+import documentation from './documentation';
 
 export default {
   handler: `${handlerPath(__dirname)}/handler.main`,
@@ -12,6 +13,7 @@ export default {
           name: Authorizers.JweAuthorizer,
           resultTtlInSeconds: 0,
         },
+        documentation,
       },
     },
   ],

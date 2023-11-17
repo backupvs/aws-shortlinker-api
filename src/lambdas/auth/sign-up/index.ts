@@ -1,5 +1,6 @@
-import schema from './schema';
+import requestSchema from './request-body.schema';
 import { handlerPath } from '@libs/handler-resolver';
+import documentation from './documentation';
 
 export default {
   handler: `${handlerPath(__dirname)}/handler.main`,
@@ -10,9 +11,10 @@ export default {
         path: 'auth/sign-up',
         request: {
           schemas: {
-            'application/json': schema,
+            'application/json': requestSchema,
           },
         },
+        documentation,
       },
     },
   ],

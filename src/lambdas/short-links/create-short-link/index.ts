@@ -1,6 +1,7 @@
 import { Authorizers } from '@lambdas/index';
-import schema from './schema';
+import requestBodySchema from './request-body.schema';
 import { handlerPath } from '@libs/handler-resolver';
+import documentation from './documentation';
 
 export default {
   handler: `${handlerPath(__dirname)}/handler.main`,
@@ -11,13 +12,14 @@ export default {
         path: 'short-links',
         request: {
           schemas: {
-            'application/json': schema,
+            'application/json': requestBodySchema,
           },
         },
         authorizer: {
           name: Authorizers.JweAuthorizer,
           resultTtlInSeconds: 0,
         },
+        documentation,
       },
     },
   ],
