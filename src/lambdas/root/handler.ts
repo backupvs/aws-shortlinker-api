@@ -8,19 +8,20 @@ import { ShortLinksService } from 'src/resources/short-links/short-links.service
 const shortLinksService = new ShortLinksService(new ShortLinksRepository());
 
 export const rootHandler: APIGatewayProxyHandler = async (event) => {
-  const shortLink = await shortLinksService.findByPathId(event.pathParameters.pathId);
+  const { shortLinkId, isOneTime, isActive, destination } =
+    await shortLinksService.findByPathId(event.pathParameters.pathId);
 
-  if (!shortLink.isActive) {
+  if (!isActive) {
     return formatJSONFailed(HttpCodes.Gone, 'This URL has been deactivated');
   }
 
-  if (shortLink.isOneTime) {
-    await shortLinksService.deactivateById(shortLink.shortLinkId);
+  if (isOneTime) {
+    await shortLinksService.deactivateById(shortLinkId);
   } else {
-    await shortLinksService.incrementVisitsCount(shortLink.shortLinkId);
+    await shortLinksService.incrementVisitsCount(shortLinkId);
   }
 
-  return formatRedirect(shortLink.destination);
+  return formatRedirect(destination, { destination });
 };
 
 export const main = middify(rootHandler);

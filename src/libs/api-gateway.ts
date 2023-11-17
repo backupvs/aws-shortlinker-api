@@ -11,13 +11,10 @@ export type ValidatedAPIGatewayProxyHandler<S> = Handler<
   APIGatewayProxyResult
 >;
 
-export const formatJSONSuccess = (
-  statusCode: HttpCodes,
-  response: Record<string, any>
-) => {
+export const formatJSONSuccess = (statusCode: HttpCodes, body: Record<string, any>) => {
   return {
     statusCode,
-    body: JSON.stringify(response),
+    body: JSON.stringify(body),
   };
 };
 
@@ -30,12 +27,12 @@ export const formatJSONFailed = (statusCode: HttpCodes, errorMsg: string) => {
   };
 };
 
-export const formatRedirect = (destinationUrl: string) => {
+export const formatRedirect = (destinationUrl: string, body: Record<string, any>) => {
   return {
-    statusCode: 301,
+    statusCode: HttpCodes.MovedPermanently,
     headers: {
       Location: destinationUrl,
     },
-    body: '',
+    body: JSON.stringify(body),
   };
 };
