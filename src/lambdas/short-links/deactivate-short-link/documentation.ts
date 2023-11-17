@@ -21,7 +21,7 @@ export default {
         description: 'No content',
       },
       responseModels: {
-        'application/json': {},
+        'application/json': Models.EmptyBody,
       },
     },
     {

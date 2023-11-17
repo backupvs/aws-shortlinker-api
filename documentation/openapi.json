@@ -10,6 +10,10 @@
           }
         }
       },
+      "EmptyBody": {
+        "type": "object",
+        "nullable": true
+      },
       "SignUpRequestBody": {
         "type": "object",
         "properties": {
@@ -159,13 +163,9 @@
           }
         }
       },
-      "ShortLinkIdParam": {
-        "type": "string"
-      },
       "shortLinkId": {
         "type": "string"
-      },
-      "66eb06d9-fe5d-45b0-abe7-b08294e8f7bf": {}
+      }
     },
     "securitySchemes": {
       "bearerToken": {
@@ -403,7 +403,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/66eb06d9-fe5d-45b0-abe7-b08294e8f7bf"
+                  "$ref": "#/components/schemas/EmptyBody"
                 }
               }
             },

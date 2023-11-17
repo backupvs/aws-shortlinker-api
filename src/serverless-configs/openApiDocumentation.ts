@@ -7,6 +7,7 @@ import createShortLinkResponseBodySchema from '@lambdas/short-links/create-short
 import getShortLinksResponseBodySchema from '@lambdas/short-links/get-short-links/response-body.schema';
 
 export enum Models {
+  EmptyBody = 'EmptyBody',
   ErrorResponseBody = 'ErrorResponseBody',
   SignUpRequestBody = 'SignUpRequestBody',
   SignUpResponseBody = 'SignUpResponseBody',
@@ -15,7 +16,6 @@ export enum Models {
   CreateShortLinkRequestBody = 'CreateShortLinkRequestBody',
   CreateShortLinkResponseBody = 'CreateShortLinkResponseBody',
   GetShortLinksResponseBody = 'GetShortLinksResponseBody',
-  ShortLinkIdParam = 'ShortLinkIdParam',
 }
 
 export const openApiDocumentation = {
@@ -39,6 +39,14 @@ export const openApiDocumentation = {
             type: 'string',
           },
         },
+      },
+    },
+    {
+      name: Models.EmptyBody,
+      contentType: 'application/json',
+      schema: {
+        type: 'object',
+        nullable: true,
       },
     },
     {
@@ -75,18 +83,6 @@ export const openApiDocumentation = {
       name: Models.GetShortLinksResponseBody,
       contentType: 'application/json',
       schema: getShortLinksResponseBodySchema,
-    },
-    {
-      name: Models.GetShortLinksResponseBody,
-      contentType: 'application/json',
-      schema: getShortLinksResponseBodySchema,
-    },
-    {
-      name: Models.ShortLinkIdParam,
-      contentType: 'application/json',
-      schema: {
-        type: 'string',
-      },
     },
   ],
 };
