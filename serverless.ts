@@ -10,6 +10,8 @@ import {
   rootHandler,
   deactivateExpiredShortLinks,
   sendNotifications,
+  swaggerJSON,
+  swaggerUI,
 } from '@lambdas/index';
 import { esBuildConfig } from '@serverless-configs/esBuildConfig';
 import { dynamoDbLocalConfig } from '@serverless-configs/dynamoDbLocalConfig';
@@ -64,16 +66,7 @@ async function createConfiguration() {
         NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
         STAGE: '${self:provider.stage}',
         REGION: '${self:provider.region}',
-        API_BASE_URL: {
-          'Fn::Join': [
-            '',
-            [
-              'https://',
-              { Ref: 'ApiGatewayRestApi' },
-              '.execute-api.${self:provider.region}.amazonaws.com/${self:provider.stage}',
-            ],
-          ],
-        },
+        API_BASE_URL: '${self:custom.apiBaseUrl}',
         USERS_TABLE: '${self:custom.usersTable}',
         SHORT_LINKS_TABLE: '${self:custom.shortLinksTable}',
         NOTIFICATIONS_QUEUE_URL: '${self:custom.notificationsQueueUrl}',
@@ -97,6 +90,8 @@ async function createConfiguration() {
       rootHandler,
       deactivateExpiredShortLinks,
       sendNotifications,
+      swaggerJSON,
+      swaggerUI,
     },
     resources: {
       Resources: {
@@ -112,6 +107,19 @@ async function createConfiguration() {
       notificationsQueue: 'notifications-queue-${self:provider.stage}',
       notificationsQueueUrl:
         'https://sqs.${self:provider.region}.amazonaws.com/${aws:accountId}/${self:custom.notificationsQueue}',
+      apiBaseUrl:
+        process.env.LAUNCH_MODE === 'deploy'
+          ? {
+              'Fn::Join': [
+                '',
+                [
+                  'https://',
+                  { Ref: 'ApiGatewayRestApi' },
+                  '.execute-api.${self:provider.region}.amazonaws.com/${self:provider.stage}',
+                ],
+              ],
+            }
+          : 'http://localhost:3000/${self:provider.stage}',
       esbuild: esBuildConfig,
       dynamodb: dynamoDbLocalConfig,
       'serverless-offline-sqs': sqsLocalConfig,

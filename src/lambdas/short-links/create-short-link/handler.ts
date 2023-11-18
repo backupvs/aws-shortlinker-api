@@ -13,10 +13,7 @@ const shortLinksService = new ShortLinksService(new ShortLinksRepository());
 const createShortLink: ValidatedAPIGatewayProxyHandler<typeof requestBodySchema> = async (
   event
 ) => {
-  const baseUrl = process.env.IS_OFFLINE
-    ? `http://localhost:3000/${process.env.STAGE}`
-    : process.env.API_BASE_URL;
-
+  const baseUrl = process.env.API_BASE_URL;
   const pathId = await shortLinksService.create(
     event.body,
     event.requestContext.authorizer.principalId

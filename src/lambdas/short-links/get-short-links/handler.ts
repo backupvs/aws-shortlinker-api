@@ -8,13 +8,10 @@ import { middify } from '@utils/middify';
 const shortLinksService = new ShortLinksService(new ShortLinksRepository());
 
 const getShortLinks: APIGatewayProxyHandler = async (event) => {
+  const baseUrl = process.env.API_BASE_URL;
   const result = await shortLinksService.findByOwnerId(
     event.requestContext.authorizer.principalId
   );
-
-  const baseUrl = process.env.IS_OFFLINE
-    ? `http://localhost:3000/${process.env.STAGE}`
-    : process.env.API_BASE_URL;
 
   // Attach full short link url to each object
   const shortLinksWithUrl = result.map((shortLink) => ({

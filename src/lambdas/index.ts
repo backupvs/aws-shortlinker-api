@@ -11,3 +11,5 @@ export { default as deactivateShortLink } from './short-links/deactivate-short-l
 export { default as rootHandler } from './root';
 export { default as deactivateExpiredShortLinks } from './cron/deactivate-expired-links';
 export { default as sendNotifications } from './send-notifications';
+export { default as swaggerUI } from './swagger/ui';
+export { default as swaggerJSON } from './swagger/get-json';

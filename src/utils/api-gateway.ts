@@ -36,3 +36,13 @@ export const formatRedirect = (destinationUrl: string, body: Record<string, any>
     body: JSON.stringify(body),
   };
 };
+
+export const formatHTML = (html: string) => {
+  return {
+    statusCode: HttpCodes.Ok,
+    headers: {
+      'Content-Type': 'text/html',
+    },
+    body: html,
+  };
+};

@@ -22,6 +22,9 @@ export const openApiDocumentation = {
   version: '1',
   title: 'Shortlinker API',
   description: 'API to make short URLs',
+  servers: {
+    url: '/${self:provider.stage}',
+  },
   securitySchemes: {
     bearerToken: {
       type: 'http',

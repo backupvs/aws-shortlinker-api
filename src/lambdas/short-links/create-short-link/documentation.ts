@@ -5,7 +5,8 @@ export default {
   summary: 'Create Short Link',
   security: [{ bearerToken: [] }],
   requestBody: {
-    description: 'Any URL',
+    description:
+      'Any URL and lifetime for short link. You can omit lifetime to create one-time link',
     required: true,
   },
   requestModels: {

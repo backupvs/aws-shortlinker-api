@@ -12,7 +12,7 @@ export default {
   },
   methodResponses: [
     {
-      statusCode: HttpCodes.Ok,
+      statusCode: HttpCodes.Created,
       responseBody: {
         description: 'JWE token',
       },
