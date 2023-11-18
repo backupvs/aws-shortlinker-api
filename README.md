@@ -50,7 +50,7 @@ First, run `npm i` to install dependencies.
 Before running the app in offline mode, execute the following commands to spin up local services:
 
 1. `npm generate-keys` - generate an asymmetric key pair, which allows creating JWE tokens.
-2. `npm run dynamodb-local:install` - install DynamoDB local server.
+2. `npm run dynamodb-local:install` - install DynamoDB local server _(requires Java Runtime Engine (JRE) version 6.x or newer)_.
 3. `npm run elasticmq:run` - run Docker container with [ElastiqMQ](https://github.com/softwaremill/elasticmq) that will immitate SQS.
 
 Swagger UI will available at **{stage}/swagger**.
