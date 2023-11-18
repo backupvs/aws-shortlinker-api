@@ -1,11 +1,11 @@
 import { randomUUID } from 'node:crypto';
 import { CreateUserDto, SignInDto } from './dto.types';
 import { UsersRepository } from '../../database/repositories/users.repository';
-import { HttpCodes } from '../../libs/http-codes.enum';
+import { HttpCodes } from '../../utils/http-codes.enum';
 import HttpError from '../../errors/HttpError';
 import { User } from './user.entity';
-import { IHashService } from 'src/common/hash-service/hash.service.interface';
-import { IJwtService } from 'src/common/token-service/jwt.service.interface';
+import { IHashService } from '@common/hash-service/hash.service.interface';
+import { IJwtService } from '@common/token-service/jwt.service.interface';
 
 export class AuthService {
   constructor(

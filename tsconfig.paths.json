@@ -2,8 +2,12 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "@common/*": ["src/common/*"],
+      "@database/*": ["src/database/*"],
       "@lambdas/*": ["src/lambdas/*"],
-      "@libs/*": ["src/libs/*"]
+      "@utils/*": ["src/utils/*"],
+      "@resources/*": ["src/resources/*"],
+      "@serverless-configs/*": ["src/serverless-configs/*"]
     }
   }
 }

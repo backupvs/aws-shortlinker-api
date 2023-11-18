@@ -1,7 +1,7 @@
 import { SQSHandler } from 'aws-lambda';
-import { EmailNotificationsFormatter } from 'src/common/email-notifications-formatter/email-notifications-formatter';
-import { IEmailService } from 'src/common/email-service/email.service.interface';
-import { SesEmailService } from 'src/common/email-service/ses-email.service';
+import { EmailNotificationsFormatter } from '@common/email-notifications-formatter/email-notifications-formatter';
+import { IEmailService } from '@common/email-service/email.service.interface';
+import { SesEmailService } from '@common/email-service/ses-email.service';
 
 const emailService: IEmailService = new SesEmailService(process.env.SES_SENDER_EMAIL);
 const emailNotificationsFormatter = new EmailNotificationsFormatter();

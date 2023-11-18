@@ -1,5 +1,5 @@
-import { Models } from 'src/serverless-configs/openApiDocumentation';
-import { HttpCodes } from '@libs/http-codes.enum';
+import { Models } from '@serverless-configs/openApiDocumentation';
+import { HttpCodes } from '@utils/http-codes.enum';
 
 export default {
   summary: 'Sign up',

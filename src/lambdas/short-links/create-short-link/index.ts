@@ -1,6 +1,6 @@
 import { Authorizers } from '@lambdas/index';
 import requestBodySchema from './request-body.schema';
-import { handlerPath } from '@libs/handler-resolver';
+import { handlerPath } from '@utils/handler-resolver';
 import documentation from './documentation';
 
 export default {

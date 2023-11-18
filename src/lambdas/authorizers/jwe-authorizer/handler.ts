@@ -1,7 +1,7 @@
 import { APIGatewayTokenAuthorizerHandler, PolicyDocument } from 'aws-lambda';
-import { IJwtService } from 'src/common/token-service/jwt.service.interface';
-import { UsersRepository } from 'src/database/repositories/users.repository';
-import { JweTokenService } from 'src/common/token-service/jwe.service';
+import { IJwtService } from '@common/token-service/jwt.service.interface';
+import { UsersRepository } from '@database/repositories/users.repository';
+import { JweTokenService } from '@common/token-service/jwe.service';
 
 const jsonTokenService: IJwtService = new JweTokenService();
 const usersRepository = new UsersRepository();

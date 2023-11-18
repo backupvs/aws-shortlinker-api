@@ -7,7 +7,7 @@ import {
   GetCommand,
 } from '@aws-sdk/lib-dynamodb';
 import { dbClient } from '../dynamo-db';
-import { User } from '../../resources/auth/user.entity';
+import { User } from '@resources/auth/user.entity';
 
 export class UsersRepository {
   private readonly usersTableName = process.env.USERS_TABLE;

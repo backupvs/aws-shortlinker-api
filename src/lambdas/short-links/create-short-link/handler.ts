@@ -1,12 +1,12 @@
 import {
   formatJSONSuccess,
   type ValidatedAPIGatewayProxyHandler,
-} from '@libs/api-gateway';
-import { middify } from '@libs/middify';
+} from '@utils/api-gateway';
+import { middify } from '@utils/middify';
 import requestBodySchema from './request-body.schema';
-import { HttpCodes } from '@libs/http-codes.enum';
-import { ShortLinksService } from 'src/resources/short-links/short-links.service';
-import { ShortLinksRepository } from 'src/database/repositories/short-links.repository';
+import { HttpCodes } from '@utils/http-codes.enum';
+import { ShortLinksService } from '@resources/short-links/short-links.service';
+import { ShortLinksRepository } from '@database/repositories/short-links.repository';
 
 const shortLinksService = new ShortLinksService(new ShortLinksRepository());
 

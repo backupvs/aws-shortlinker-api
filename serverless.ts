@@ -11,16 +11,16 @@ import {
   deactivateExpiredShortLinks,
   sendNotifications,
 } from '@lambdas/index';
-import { esBuildConfig } from 'src/serverless-configs/esBuildConfig';
-import { dynamoDbLocalConfig } from 'src/serverless-configs/dynamoDbLocalConfig';
-import { accessLambdaRole } from 'src/serverless-configs/accessLambdaRole';
-import { shortLinksTable, usersTable } from 'src/serverless-configs/dynamoDbResources';
-import { FileKeysService } from 'src/common/keys-service/file-keys.service';
-import { IKeysService, Keys } from 'src/common/keys-service/keys.service.interface';
-import { sqsLocalConfig } from 'src/serverless-configs/sqsLocalConfig';
-import { notificationsQueueResource } from 'src/serverless-configs/notificationsQueueResource';
-import { eventBridgeLocalConfig } from 'src/serverless-configs/eventBridgeLocalConfig';
-import { openApiDocumentation } from 'src/serverless-configs/openApiDocumentation';
+import { esBuildConfig } from '@serverless-configs/esBuildConfig';
+import { dynamoDbLocalConfig } from '@serverless-configs/dynamoDbLocalConfig';
+import { accessLambdaRole } from '@serverless-configs/accessLambdaRole';
+import { shortLinksTable, usersTable } from '@serverless-configs/dynamoDbResources';
+import { FileKeysService } from '@common/keys-service/file-keys.service';
+import { IKeysService, Keys } from '@common/keys-service/keys.service.interface';
+import { sqsLocalConfig } from '@serverless-configs/sqsLocalConfig';
+import { notificationsQueueResource } from '@serverless-configs/notificationsQueueResource';
+import { eventBridgeLocalConfig } from '@serverless-configs/eventBridgeLocalConfig';
+import { openApiDocumentation } from '@serverless-configs/openApiDocumentation';
 
 validateEnv(process.env, {
   JWE_EXPIRES_IN: num(),

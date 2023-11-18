@@ -1,9 +1,9 @@
 import { randomUUID } from 'node:crypto';
 import { CreateShortLinkDto } from './dto.types';
-import { ShortLinksRepository } from 'src/database/repositories/short-links.repository';
+import { ShortLinksRepository } from '@database/repositories/short-links.repository';
 import { ShortLink } from './short-link.entity';
 import HttpError from 'src/errors/HttpError';
-import { HttpCodes } from '@libs/http-codes.enum';
+import { HttpCodes } from '@utils/http-codes.enum';
 import { nanoid } from 'nanoid';
 
 export class ShortLinksService {

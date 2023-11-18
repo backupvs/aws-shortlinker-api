@@ -1,12 +1,12 @@
-import { formatJSONSuccess, ValidatedAPIGatewayProxyHandler } from '@libs/api-gateway';
-import { middify } from '@libs/middify';
+import { formatJSONSuccess, ValidatedAPIGatewayProxyHandler } from '@utils/api-gateway';
+import { middify } from '@utils/middify';
 
 import requestBodySchema from './request-body.schema';
-import { AuthService } from 'src/resources/auth/auth.service';
-import { UsersRepository } from 'src/database/repositories/users.repository';
-import { HttpCodes } from '@libs/http-codes.enum';
-import { ScryptHashService } from 'src/common/hash-service/scrypt-hash.service';
-import { JweTokenService } from 'src/common/token-service/jwe.service';
+import { AuthService } from '@resources/auth/auth.service';
+import { UsersRepository } from '@database/repositories/users.repository';
+import { HttpCodes } from '@utils/http-codes.enum';
+import { ScryptHashService } from '@common/hash-service/scrypt-hash.service';
+import { JweTokenService } from '@common/token-service/jwe.service';
 
 const authService = new AuthService(
   new UsersRepository(),

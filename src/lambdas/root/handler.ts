@@ -1,9 +1,9 @@
-import { formatJSONFailed, formatRedirect } from '@libs/api-gateway';
-import { HttpCodes } from '@libs/http-codes.enum';
-import { middify } from '@libs/middify';
+import { formatJSONFailed, formatRedirect } from '@utils/api-gateway';
+import { HttpCodes } from '@utils/http-codes.enum';
+import { middify } from '@utils/middify';
 import { APIGatewayProxyHandler } from 'aws-lambda';
-import { ShortLinksRepository } from 'src/database/repositories/short-links.repository';
-import { ShortLinksService } from 'src/resources/short-links/short-links.service';
+import { ShortLinksRepository } from '@database/repositories/short-links.repository';
+import { ShortLinksService } from '@resources/short-links/short-links.service';
 
 const shortLinksService = new ShortLinksService(new ShortLinksRepository());
 

@@ -1,9 +1,9 @@
 import { ScheduledHandler } from 'aws-lambda';
-import { ShortLinksRepository } from 'src/database/repositories/short-links.repository';
-import { UsersRepository } from 'src/database/repositories/users.repository';
+import { ShortLinksRepository } from '@database/repositories/short-links.repository';
+import { UsersRepository } from '@database/repositories/users.repository';
 import { SqsQueue } from 'src/sqs-queue/sqs.queue';
-import { ShortLinksService } from 'src/resources/short-links/short-links.service';
-import { NotificationType } from 'src/common/email-notifications-formatter/notification-type.enum';
+import { ShortLinksService } from '@resources/short-links/short-links.service';
+import { NotificationType } from '@common/email-notifications-formatter/notification-type.enum';
 
 const notificationsQueue = new SqsQueue(process.env.NOTIFICATIONS_QUEUE_URL);
 const shortLinksService = new ShortLinksService(new ShortLinksRepository());
