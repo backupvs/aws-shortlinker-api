@@ -1,5 +1,7 @@
+const tableType = process.env.LAUNCH_MODE === 'deploy' ? 'GlobalTable' : 'Table';
+
 export const usersTable = {
-  Type: 'AWS::DynamoDB::GlobalTable',
+  Type: `AWS::DynamoDB::${tableType}`,
   Properties: {
     TableName: '${self:custom.usersTable}',
     Replicas: [
@@ -48,7 +50,7 @@ export const usersTable = {
 };
 
 export const shortLinksTable = {
-  Type: 'AWS::DynamoDB::GlobalTable',
+  Type: `AWS::DynamoDB::${tableType}`,
   Properties: {
     TableName: '${self:custom.shortLinksTable}',
     Replicas: [

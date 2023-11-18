@@ -7,8 +7,7 @@
     "dynamodb-local:install": "npx serverless dynamodb install",
     "elasticmq:run": "docker run --name elasticmq --rm -d -p 9324:9324 -p 9325:9325 softwaremill/elasticmq-native",
     "offline": "npx serverless offline start",
-    "deploy:dev": "npx serverless deploy --stage dev",
-    "deploy:prod": "npx serverless deploy --stage prod",
+    "deploy": "cross-env LAUNCH_MODE=deploy npx serverless deploy",
     "openapi:generate": "npx serverless openapi generate -o documentation/openapi.json -f json"
   },
   "dependencies": {
@@ -25,6 +24,7 @@
     "@serverless/typescript": "^3.0.0",
     "@types/aws-lambda": "^8.10.71",
     "@types/node": "^14.14.25",
+    "cross-env": "^7.0.3",
     "envalid": "^8.0.0",
     "esbuild": "^0.14.11",
     "json-schema-to-ts": "^1.5.0",
