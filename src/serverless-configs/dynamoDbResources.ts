@@ -1,7 +1,18 @@
 export const usersTable = {
-  Type: 'AWS::DynamoDB::Table',
+  Type: 'AWS::DynamoDB::GlobalTable',
   Properties: {
     TableName: '${self:custom.usersTable}',
+    Replicas: [
+      {
+        Region: '${self:provider.region}',
+      },
+      {
+        Region: 'us-east-1',
+      },
+    ],
+    StreamSpecification: {
+      StreamViewType: 'NEW_AND_OLD_IMAGES',
+    },
     AttributeDefinitions: [
       {
         AttributeName: 'userId',
@@ -37,9 +48,20 @@ export const usersTable = {
 };
 
 export const shortLinksTable = {
-  Type: 'AWS::DynamoDB::Table',
+  Type: 'AWS::DynamoDB::GlobalTable',
   Properties: {
     TableName: '${self:custom.shortLinksTable}',
+    Replicas: [
+      {
+        Region: '${self:provider.region}',
+      },
+      {
+        Region: 'us-east-1',
+      },
+    ],
+    StreamSpecification: {
+      StreamViewType: 'NEW_AND_OLD_IMAGES',
+    },
     AttributeDefinitions: [
       {
         AttributeName: 'shortLinkId',
