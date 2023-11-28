@@ -2,6 +2,8 @@ import {
   SQSClient,
   SendMessageCommand,
   SendMessageCommandInput,
+  DeleteMessageCommandInput,
+  DeleteMessageCommand,
 } from '@aws-sdk/client-sqs';
 
 export class SqsQueue {
@@ -25,6 +27,15 @@ export class SqsQueue {
     const result = await this.client.send(new SendMessageCommand(params));
 
     return result.MessageId;
+  }
+
+  async delete(receiptHandle: string) {
+    const params: DeleteMessageCommandInput = {
+      QueueUrl: this.queueUrl,
+      ReceiptHandle: receiptHandle,
+    };
+
+    await this.client.send(new DeleteMessageCommand(params));
   }
 
   private getOfflineUrl(queueUrl: string) {
