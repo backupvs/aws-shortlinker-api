@@ -14,7 +14,7 @@ export class EmailNotificationsFormatter {
 
   constructor() {
     this.handlers = {
-      [NotificationType.DeactivationExpiredLink]: linkExpiredFormatter,
+      [NotificationType.ExpiredLinkDeactivation]: linkExpiredFormatter,
     };
   }
 

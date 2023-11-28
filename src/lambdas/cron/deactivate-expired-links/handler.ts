@@ -17,11 +17,10 @@ export const deactivateExpiredShortLinks: ScheduledHandler = async () => {
     const user = await usersRepository.findById(link.ownerId);
 
     const message = JSON.stringify({
-      type: NotificationType.DeactivationExpiredLink,
+      type: NotificationType.ExpiredLinkDeactivation,
       email: user.email,
       params: {
         shortLinkId: link.shortLinkId,
-        reason: 'Expired',
       },
     });
 
