@@ -36,7 +36,7 @@ Install [AWS CLI](https://aws.amazon.com/cli/) , run `aws configure` and follow 
 - `npm run deploy -- --stage <stage>` to deploy with specific stage.
 - `npm run deploy -- --verbose` to deploy with verbose logs.
 
-Swagger UI will available at **{stage}/swagger**.
+Swagger UI will be available at **{stage}/swagger**.
 
 > **NOTE**<br>
 > Ensure that you only use authorized SES email entities to be able to send and receive notifications in sandbox. For more details, refer [here](https://docs.aws.amazon.com/ses/latest/dg/creating-identities.html).
@@ -53,7 +53,7 @@ Before running the app in offline mode, execute the following commands to spin u
 2. `npm run dynamodb-local:install` - install DynamoDB local server _(requires Java Runtime Engine (JRE) version 6.x or newer)_.
 3. `npm run elasticmq:run` - run Docker container with [ElastiqMQ](https://github.com/softwaremill/elasticmq) that will immitate SQS.
 
-Swagger UI will available at **{stage}/swagger**.
+Swagger UI will be available at **{stage}/swagger**.
 
 ### Start
 
